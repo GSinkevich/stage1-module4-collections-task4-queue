@@ -6,25 +6,32 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class ArrayDequeCreator extends PriorityQueue<String> {
+
+
     public ArrayDeque<Integer> createArrayDeque(Queue<Integer> firstQueue, Queue<Integer> secondQueue) {
 
+
         ArrayDeque<Integer> resultArrayDeque = new ArrayDeque<>();
-        Integer SizeResult = firstQueue.size() + secondQueue.size();
-        resultArrayDeque.addFirst(Objects.requireNonNull(firstQueue.poll()));
-        resultArrayDeque.addFirst(Objects.requireNonNull(firstQueue.poll()));
-        resultArrayDeque.addFirst(Objects.requireNonNull(secondQueue.poll()));
-        resultArrayDeque.addFirst(Objects.requireNonNull(secondQueue.poll()));
+        int SizeResult = firstQueue.size() + secondQueue.size();
+
+        AddTwoCards(firstQueue,resultArrayDeque);
+        AddTwoCards(secondQueue,resultArrayDeque);
 
         while (resultArrayDeque.size() != SizeResult)
         {
-            firstQueue.add(resultArrayDeque.pollFirst());
-            resultArrayDeque.addFirst(Objects.requireNonNull(firstQueue.poll()));
-            resultArrayDeque.addFirst(Objects.requireNonNull(firstQueue.poll()));
-            secondQueue.add(resultArrayDeque.pollFirst());
-            resultArrayDeque.addFirst(Objects.requireNonNull(secondQueue.poll()));
-            resultArrayDeque.addFirst(Objects.requireNonNull(secondQueue.poll()));
-        }
+            firstQueue.add(resultArrayDeque.pollLast());
+            AddTwoCards(firstQueue,resultArrayDeque);
+            secondQueue.add(resultArrayDeque.pollLast());
+            AddTwoCards(secondQueue,resultArrayDeque);
 
+        }
         return  resultArrayDeque;
     }
+
+    private void AddTwoCards(Queue<Integer> firstQueue,ArrayDeque<Integer> resultArrayDeque) {
+        resultArrayDeque.addLast(Objects.requireNonNull(firstQueue.poll()));
+        resultArrayDeque.addLast(Objects.requireNonNull(firstQueue.poll()));
+    }
 }
+
+
